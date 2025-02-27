@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="main">
+      <!-- Left part  -->
+      <div class="left-part">
+        <div class="profile-logo">
+          <img src="/Image/profile_image.jpg" alt="" />
+        </div>
+        <div class="profile-text">
+          <br />
+          <h5>Hi I'm</h5>
+          <h1>Prince Kumar</h1>
+          <br />
+          <p>
+            Welcome to Tic toc toe game website! As a dedicated and aspiring
+            web developer, I am driven by a passion for creating innovative
+            solutions and advancing technology. I love coding and
+            problem-solving, and I continuously seek opportunities to learn
+            and grow in this dynamic field.
+          </p>
+        </div>
+        <div class="social-media">
+          <a href="mailto:mailbox.prince.kumar@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a>
+          <a href="https://github.com/PrinceKumarCodes" target="_blank"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/prince-kumar-202a33256/" target="_blank"><i
+              class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+      <!-- Right part  -->
+
+      <div class="right-part">
+        <div class="turn">
+          <div class="choose">
+            <div class="turn1 box-shadow-turn">X</div>
+            <div class="turn2">O</div>
+          </div>
+        </div>
+
+        <div class="game">
+          <button class="boxes box1 hover"></button>
+          <button class="boxes box2 hover"></button>
+          <button class="boxes box3 hover"></button>
+          <button class="boxes box4 hover"></button>
+          <button class="boxes box5 hover"></button>
+          <button class="boxes box6 hover"></button>
+          <button class="boxes box7 hover"></button>
+          <button class="boxes box8 hover"></button>
+          <button class="boxes box9 hover"></button>
+        </div>
+
+        <h3 class="msg hide">
+          <span id="user-name"></span> Winner
+          <span id="winner-result"> </span>
+        </h3>
+
+        <button id="reset" class="btn">Reset</button>
+        <button id="new-game" class="btn">New Game</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- confetti effect cdn link -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
