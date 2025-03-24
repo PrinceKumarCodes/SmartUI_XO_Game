@@ -23,7 +23,8 @@ A modern, responsive Tic-Tac-Toe game built with HTML, CSS, and JavaScript. This
   - The first player to get 3 in a row wins!
   - Click Reset to restart or New Game to start fresh.
 
-## 🔧 Tech Stack
+## 🖥️ Technologies Used
+
 - HTML5 – Structure
 
 - CSS3 – Styling & Animations
