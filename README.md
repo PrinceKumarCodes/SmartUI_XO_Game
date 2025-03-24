@@ -10,18 +10,18 @@ A modern, responsive Tic-Tac-Toe game built with HTML, CSS, and JavaScript. This
 - Restart & New Game buttons
 
 # 📷 Live Project
-    [Click here].(http://bit.ly/41Xq7N3)
+    Click here
 
 # 🚀 How to Play
-1️ Open the game in your browser.
-2️ Click on a grid box to make a move.
-3️ Players take turns placing "X" or "O".
-4️ The first player to get 3 in a row wins!
-5️ Click Reset to restart or New Game to start fresh.
+  - Open the game in your browser.
+  - Click on a grid box to make a move.
+  - Players take turns placing "X" or "O".
+  - The first player to get 3 in a row wins!
+  - Click Reset to restart or New Game to start fresh.
 
 # 🔧 Tech Stack
-HTML5 – Structure
+- HTML5 – Structure
 
-CSS3 – Styling & Animations
+- CSS3 – Styling & Animations
 
-JavaScript (Vanilla) – Game Logic
+- JavaScript (Vanilla) – Game Logic
