@@ -20,10 +20,23 @@ let new_game = document.querySelector("#new-game"); // Button to start a new gam
 let user_name = document.querySelector("#user-name"); // Element to display the user's name
 let start_game = document.querySelector("#start-game"); // Button to start the game
 
+let controlBtns = document.querySelectorAll(".btn");
+controlBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.classList.add("shadow2");
+    btn.classList.remove("shadow1");
+    setTimeout(() => {
+      btn.classList.add("shadow1");
+      btn.classList.remove("shadow2");
+    }, 300); // 0.3 second later back to normal
+  });
+});
+
 // Game control variables
 let turnX = true; // Boolean to track if it's X's turn (true = X's turn, false = O's turn)
 let clickSound = new Audio("/Image/notification.mp3"); // Sound effect for clicking on a box
 let winner_sound = new Audio("/Image/winner.wav"); // Sound effect when there's a winner
+let gameDraw = new Audio("/Image/draw_sound.mp3"); // Sound effect for a draw in the game
 //------------------------------------------------------------------------------
 // Variables to store player names and game state
 let userName = "";
@@ -101,12 +114,12 @@ function speak(text, callback) {
   speech.rate = 1.1; // normal speed
   speech.volume = 1; // full volume
   speech.lang = "en-US"; // English accent
-  // ✅ Jab bolna khatam ho jaye tab 4 sec wait karke callback call karega
+
   speech.onend = () => {
     if (callback) {
       setTimeout(() => {
         callback();
-      }, -1000);
+      }, 0);
     }
   };
 
@@ -266,6 +279,7 @@ function checkWinner() {
 
   // Agar saare boxes fill ho gaye aur koi winner nahi mila → Draw
   if (isDraw) {
+    gameDraw.play(); // Play draw sound effect
     msg.classList.remove("hide"); // Show the result message
     winner_result.innerText = "Game Draw"; // Display draw message
     winner_result.style.color = "#00FFFF"; // Set color for draw message
