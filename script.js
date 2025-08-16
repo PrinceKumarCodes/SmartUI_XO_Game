@@ -8,6 +8,7 @@ function reload() {
   window.location.reload();
 }
 
+//------------------------------------------------------------------------------
 // DOM elements representing the game board boxes, player turns, message display, and buttons
 let boxes = document.querySelectorAll(".boxes"); // All the clickable boxes for the tic-tac-toe game
 let turn1 = document.querySelector(".turn1"); // Element representing player X's turn
@@ -23,7 +24,6 @@ let start_game = document.querySelector("#start-game"); // Button to start the g
 let turnX = true; // Boolean to track if it's X's turn (true = X's turn, false = O's turn)
 let clickSound = new Audio("/Image/notification.mp3"); // Sound effect for clicking on a box
 let winner_sound = new Audio("/Image/winner.wav"); // Sound effect when there's a winner
-
 //------------------------------------------------------------------------------
 // Variables to store player names and game state
 let userName = "";
@@ -85,17 +85,32 @@ function getDrawLines(player1Name, player2Name) {
 
 // Event listener for the "Start Game" button to initiate the game
 start_game.addEventListener("click", () => {
-  speak("Hello! Welcome to the game. Could you please tell me your name?");
+  speak(
+    `Hello! Welcome to the game. Could you please tell me your name?`,
+    () => {
+      startRecognition();
+    }
+  );
   currentStep = 0;
-  startRecognition();
+  // startRecognition();
 });
 // Function to speak a message using the Web Speech API
-function speak(text) {
+function speak(text, callback) {
   let speech = new SpeechSynthesisUtterance(text);
-  speech.pitch = 3; // thoda high tone
-  speech.rate = 1.3; // normal speed
-  speech.volume = 2; // full volume
+  speech.pitch = 1.2; // thoda high tone
+  speech.rate = 1.1; // normal speed
+  speech.volume = 1; // full volume
   speech.lang = "en-US"; // English accent
+  // ✅ Jab bolna khatam ho jaye tab 4 sec wait karke callback call karega
+  speech.onend = () => {
+    if (callback) {
+      setTimeout(() => {
+        callback();
+      }, -1000);
+    }
+  };
+
+  window.speechSynthesis.cancel(); // purane speech clear
   window.speechSynthesis.speak(speech);
 }
 
@@ -110,41 +125,49 @@ function startRecognition() {
 
   recognition.onresult = (event) => {
     let userSpeech = event.results[0][0].transcript.trim();
-    // Thank you for sharing your name.Now get ready — it's time to play the game!
 
     // ✅ Step 0: User name
     if (currentStep === 0) {
       userName = userSpeech;
       speak(
-        `Nice to meet you ${userName}. Now, please tell me Player 1's name.`
+        `Nice to meet you ${userName}. Now, please tell me Player 1's name.`,
+        () => {
+          startRecognition(); // 🔥 callback se recognition start
+        }
       );
       currentStep = 1;
-      setTimeout(() => startRecognition(), 3000); // thoda gap de kar fir se listen
+      // setTimeout(() => startRecognition(), 5000); // thoda gap de kar fir se listen
 
       // ✅ Step 1: Player 1
     } else if (currentStep === 1) {
       player1Name = userSpeech;
       speak(
-        `Great! Player 1 is ${player1Name}. Now, please tell me Player 2's name.`
+        `Great! Player 1 is ${player1Name}. Now, please tell me Player 2's name.`,
+        () => {
+          startRecognition();
+        }
       );
       currentStep = 2;
-      setTimeout(() => startRecognition(), 3200);
+      // setTimeout(() => startRecognition(), 5000);
 
       // ✅ Step 2: Player 2 (check duplicate with player1)
     } else if (currentStep === 2) {
       if (userSpeech.toLowerCase() === player1Name.toLowerCase()) {
         speak(
-          `Oops! Player 2 cannot have the same name as Player 1. Please tell me a different name.`
+          `Oops! Player 2 cannot have the same name as Player 1. Please tell me a different name.`,
+          () => {
+            startRecognition();
+          }
         );
-        setTimeout(() => startRecognition(), 3200); // fir se puchhega
+        // setTimeout(() => startRecognition(), 5000); // fir se puchhega
       } else {
         player2Name = userSpeech;
         speak(
           `Awesome! Player 1 is X: ${player1Name}, and Player 2 is O: ${player2Name}. 
-           Thank you ${userName} for sharing your name and the players' names. 
-           And by the way, this exciting game has been proudly created by Prince Bhai.
-           Now get ready — it's time to play the game! 
-           Let's begin, ${userName}!`
+          Thank you ${userName} for sharing your name and the players' names. 
+          And by the way, this exciting game has been proudly created by Prince Bhai.
+          Now get ready — it's time to play the game! 
+          Let's begin${userName}!`
         );
         currentStep = 3;
       }
@@ -152,8 +175,10 @@ function startRecognition() {
   };
 
   recognition.onerror = (e) => {
-    speak("Sorry, I didn't catch that. Could you please repeat?");
-    setTimeout(() => startRecognition(), 3200);
+    speak(`Sorry, I didn't catch that. Could you please repeat?`, () => {
+      startRecognition();
+    });
+    // setTimeout(() => startRecognition(), 4000);
   };
 
   recognition.start(); // ✅ har baar correct place par start
@@ -274,7 +299,9 @@ function showResult(result) {
     message = getRandomLine(getDrawLines(player1Name, player2Name)); // Speak a random congratulatory message for X);
   }
 
-  speak(message); // Speak a random congratulatory message for O
+  setTimeout(() => {
+    speak(message);
+  }, 1000); // Speak a random congratulatory message for O
 }
 
 //-----------------------------------------Confetti Effect----------------------------------------
